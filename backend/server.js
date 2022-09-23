@@ -4,11 +4,14 @@ const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:3000/',
+};
 
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(fileUpload());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // ## MIDDLEWARES ##
 const isAuth = require('./middlewares/isAuth');

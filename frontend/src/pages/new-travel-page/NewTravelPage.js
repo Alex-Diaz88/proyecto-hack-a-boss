@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import NewTravelForm from "../../components/NewTravelForm";
+import NewTravelForm from "../../components/new-travel-form/NewTravelFormComponent.jsx";
 import { useTokenContext } from "../../contexts/TokenContext";
 
 const NewTravelPage = () => {

@@ -1,6 +1,6 @@
-import Travel from "../Travel";
+import Travel from "../travel/TravelComponent.jsx";
 import "./styles.css";
-import { travels } from "../../App";
+//import { travels } from "../../App";
 
 const TravelList = ({ travels }) => {
   return (

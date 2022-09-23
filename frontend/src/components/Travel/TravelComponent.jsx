@@ -1,7 +1,7 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
-import Avatar from "../Avatar";
-import PhotoSlider from "../PhotosSlider";
+import Avatar from "../avatar/AvatarComponent.jsx";
+import PhotoSlider from "../photo-slider/PhotoSliderComponent.jsx";
 
 const Travel = ({ travel }) => {
   const { title, entry, place, activity, content, createdAt, idUser, photos, username, avatar } = travel;
