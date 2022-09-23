@@ -1,4 +1,4 @@
-import Travel from "../travel/TravelComponent.jsx";
+import Travel from "../Travel/TravelComponent.jsx";
 import "./styles.css";
 //import { travels } from "../../App";
 

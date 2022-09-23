@@ -1,17 +1,18 @@
 import "./styles.css";
 import banner from "../../assets/images/banner.png";
-import LoginForm from "./components/login-form/LoginFormComponent.jsx";
+import LoginForm from "./components/login-form/LoginFormComponent";
 import { Link } from "react-router-dom";
-import UserProfileHeaderComponent from "./components/user-profile/UserProfileHeaderComponent.jsx";
-import { useState } from "react";
-import { loginUser } from "../../services/Utils";
+import UserProfileHeaderComponent from "./components/user-profile/UserProfileHeaderComponent";
+import { useEffect, useState } from "react";
 import { postAxios } from "../../services/CommonServices";
 import { URL_LOGIN_ENDPOINT } from "../../services/constants";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Header = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [tokenUser, setTokenUser] = useState(null);
+  const [tokenUser, setTokenUser] = useLocalStorage("token");
+  const [loggedUser, setLoggedUser] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -21,12 +22,25 @@ const Header = () => {
     setPassword(e.target.value);
   };
 
+  console.log(tokenUser);
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    const body = JSON.stringify({ email, password });
+    try {
+      const body = {
+        email: email,
+        password: password,
+      };
+      const res = await postAxios(URL_LOGIN_ENDPOINT, body);
 
-    const { authToken } = await postAxios(URL_LOGIN_ENDPOINT, body);
-    setTokenUser(authToken);
+      setTokenUser(res.authToken);
+
+      setEmail("");
+      setPassword("");
+      setLoggedUser(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -35,7 +49,7 @@ const Header = () => {
         <Link to="/">
           <img src={banner} alt="Banner ha fallado" />
         </Link>
-        {!tokenUser ? (
+        {!loggedUser ? (
           <LoginForm
             email={email}
             password={password}
