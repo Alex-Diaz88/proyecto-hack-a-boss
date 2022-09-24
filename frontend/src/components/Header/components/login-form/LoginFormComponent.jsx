@@ -8,15 +8,15 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
         handleLogin(e);
       }}
     >
-      <h3>Iniciar sesión</h3>
+      <h2>Iniciar sesión</h2>
 
       <label htmlFor="login_email">Email:</label>
       <input
         id="login_email"
         type="email"
         value={email}
-        onChange={(e) => {
-          setEmail(e);
+        onChange={(event) => {
+          setEmail(event);
         }}
       />
 
@@ -25,8 +25,8 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
         id="login_password"
         type="password"
         value={password}
-        onChange={(e) => {
-          setPassword(e);
+        onChange={(event) => {
+          setPassword(event);
         }}
       />
 

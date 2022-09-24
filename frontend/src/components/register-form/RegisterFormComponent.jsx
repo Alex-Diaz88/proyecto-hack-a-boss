@@ -1,7 +1,9 @@
 import "./styles.css";
 import { useState, useContext } from "react";
+import { postAxios } from "../../services/CommonServices";
 import { useNavigate } from "react-router-dom";
 import { AlertContext } from "../../contexts/AlertContext";
+import { URL_NEWUSER_ENDPOINT } from "../../services/constants";
 
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
@@ -11,43 +13,35 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const { setAlert } = useContext(AlertContext);
 
+  const registerUser = async (e) => {
+    e.preventDefault();
+
+    if (password !== repeatPassword) {
+      throw new Error("Las contraseñas no coinciden.");
+    } else {
+      try {
+        const body = {
+          username,
+          email,
+          password,
+        };
+
+        const { message } = await postAxios(URL_NEWUSER_ENDPOINT, body);
+
+        setAlert({ type: "success", msg: message });
+        navigate("/");
+      } catch (error) {
+        console.error(error.message);
+        setAlert({ type: "error", msg: error.message });
+      }
+    }
+  };
+
   return (
     <div className="register_form">
-      <form
-        onSubmit={async (event) => {
-          try {
-            event.preventDefault();
-
-            if (password !== repeatPassword) {
-              throw new Error("Las contraseñas no coinciden.");
-            }
-
-            const newUser = { username, email, password };
-
-            const res = await fetch(
-              `${process.env.REACT_APP_API_URL}/register`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newUser),
-              }
-            );
-            const body = await res.json();
-
-            if (!res.ok) {
-              throw new Error(body.message);
-            }
-
-            setAlert({ type: "success", msg: body.message });
-            navigate("/");
-          } catch (error) {
-            console.error(error.message);
-            setAlert({ type: "error", msg: error.message });
-          }
-        }}
-      >
+      <div></div>
+      <h2>Registro</h2>
+      <form>
         <label htmlFor="register_username">Nombre de usuario:</label>
         <input
           id="register_username"
@@ -87,7 +81,9 @@ const RegisterForm = () => {
           }}
         />
 
-        <button>Registro</button>
+        <p>Estoy de acuerdo con los Teminos y Condiciones.</p>
+
+        <button onClick={(e) => registerUser(e)}>Registro</button>
       </form>
     </div>
   );

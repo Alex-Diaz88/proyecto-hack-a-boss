@@ -1,9 +1,8 @@
-import "./styles.css";
-import RegisterForm from "../../components/register-form/RegisterForm.jsx";
+import RegisterForm from "../../components/register-form/RegisterFormComponent";
 
 const RegisterPage = () => {
   return (
-    <section className="register_page">
+    <section>
       <RegisterForm />
     </section>
   );
