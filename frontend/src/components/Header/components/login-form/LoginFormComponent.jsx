@@ -15,8 +15,8 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
         id="login_email"
         type="email"
         value={email}
-        onChange={(event) => {
-          setEmail(event);
+        onChange={(e) => {
+          setEmail(e);
         }}
       />
 
@@ -25,8 +25,8 @@ const LoginForm = ({ email, password, setEmail, setPassword, handleLogin }) => {
         id="login_password"
         type="password"
         value={password}
-        onChange={(event) => {
-          setPassword(event);
+        onChange={(e) => {
+          setPassword(e);
         }}
       />
 

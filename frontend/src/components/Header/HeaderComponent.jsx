@@ -1,18 +1,18 @@
 import "./styles.css";
-import banner from "../../assets/images/banner.png";
-import LoginForm from "./components/login-form/LoginFormComponent";
 import { Link } from "react-router-dom";
-import UserProfileHeaderComponent from "./components/user-profile/UserProfileHeaderComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { postAxios } from "../../services/CommonServices";
 import { URL_LOGIN_ENDPOINT } from "../../services/constants";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import { useTokenContext } from "../../contexts/TokenContext";
+import banner from "../../assets/images/banner.png";
+import LoginForm from "./components/login-form/LoginFormComponent";
+import UserProfileHeaderComponent from "./components/user-profile/UserProfileHeaderComponent";
 
 const Header = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [tokenUser, setTokenUser] = useLocalStorage("token");
-  const [loggedUser, setLoggedUser] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const { token, setToken } = useTokenContext();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -22,8 +22,6 @@ const Header = () => {
     setPassword(e.target.value);
   };
 
-  console.log(tokenUser);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -31,13 +29,12 @@ const Header = () => {
         email: email,
         password: password,
       };
-      const res = await postAxios(URL_LOGIN_ENDPOINT, body);
+      const { data } = await postAxios(URL_LOGIN_ENDPOINT, body);
 
-      setTokenUser(res.authToken);
-
+      setToken(data.authToken);
+      setUserInfo(data);
       setEmail("");
       setPassword("");
-      setLoggedUser(true);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +46,7 @@ const Header = () => {
         <Link to="/">
           <img src={banner} alt="Banner ha fallado" />
         </Link>
-        {!loggedUser ? (
+        {!token ? (
           <LoginForm
             email={email}
             password={password}
@@ -58,7 +55,7 @@ const Header = () => {
             handleLogin={handleLogin}
           />
         ) : (
-          <UserProfileHeaderComponent tokenUser={tokenUser} />
+          <UserProfileHeaderComponent userInfo={userInfo} />
         )}
       </div>
     </header>

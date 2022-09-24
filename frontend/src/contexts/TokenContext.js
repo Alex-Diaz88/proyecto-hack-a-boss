@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { getAxios } from "../services/CommonServices";
+import { URL_GETUSER_ENDPOINT } from "../services/constants";
 import useLocalStorage from "../hooks/useLocalStorage";
+import jwt_decode from "jwt-decode";
 
 export const TokenContext = createContext();
 
@@ -13,27 +16,15 @@ export const CustomTokenContextProvider = ({ children }) => {
       return;
     }
 
-    console.log("1");
     const fetchUser = async () => {
       try {
-        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        const decodedToken = jwt_decode(token);
 
-        console.log("2");
-
-        const res = await fetch(
-          `${process.env.REACT_APP_API_URL}/users/${decodedToken.id}`
+        const { data } = await getAxios(
+          `${URL_GETUSER_ENDPOINT}${decodedToken.id}`
         );
 
-        const body = await res.json();
-
-        console.log("3");
-
-        if (!res.ok) {
-          console.log("4");
-          throw new Error(body.message);
-        }
-
-        setLoggedUser(body.data);
+        setLoggedUser(data);
       } catch (error) {
         console.error(error.message);
       }
