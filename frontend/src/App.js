@@ -2,12 +2,14 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CustomTokenContextProvider } from "./contexts/TokenContext";
 import { CustomAlertContextProvider } from "./contexts/AlertContext";
-import FrontPage from "./pages/front-page/FrontPage.js";
-import RegisterPage from "./pages/register-page/RegisterPage.js";
-import NewTravelPage from "./pages/new-travel-page/NewTravelPage.js";
-import NotFoundPage from "./pages/not-found-page/NotFoundPage.js";
-import Header from "./components/header/HeaderComponent.jsx";
-import Alert from "./components/alert/AlertComponent.jsx";
+import FrontPage from "./pages/front-page/FrontPage";
+import RegisterPage from "./pages/register-page/RegisterPage";
+import ActiveUser from "./components/active-user/activeUser";
+import ProfilePage from "./pages/profile-page/ProfilePage";
+import NewTravelPage from "./pages/new-travel-page/NewTravelPage";
+import NotFoundPage from "./pages/not-found-page/NotFoundPage";
+import Header from "./components/header/HeaderComponent";
+import Alert from "./components/alert/AlertComponent";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<FrontPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/active-user" element={<ActiveUser />} />
+                <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/travels/new" element={<NewTravelPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

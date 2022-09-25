@@ -10,7 +10,7 @@ const getUser = async (req, res, next) => {
         const { idUser } = req.params;
 
         const [[user]] = await connection.query(
-            `select id, username, avatar, createdAt from user where id = ?`,
+            `select id, username, email, avatar, createdAt from user where id = ?`,
             [idUser]
         );
 

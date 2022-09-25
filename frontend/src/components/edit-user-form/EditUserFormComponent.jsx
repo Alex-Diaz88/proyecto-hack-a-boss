@@ -1,6 +1,5 @@
 import Avatar from "../Avatar";
 import { useState, useContext, useRef } from "react";
-import { toast } from "react-toastify";
 import { useTokenContext } from "../../contexts/TokenContext";
 import { AlertContext } from "../../contexts/AlertContext";
 

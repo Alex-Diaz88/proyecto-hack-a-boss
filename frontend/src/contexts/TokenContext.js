@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAxios } from "../services/CommonServices";
-import { URL_GETUSER_ENDPOINT } from "../services/constants";
+import { URL_BACKEND, URL_GETUSER_ENDPOINT } from "../services/constants";
 import useLocalStorage from "../hooks/useLocalStorage";
 import jwt_decode from "jwt-decode";
 
@@ -24,7 +24,10 @@ export const CustomTokenContextProvider = ({ children }) => {
           `${URL_GETUSER_ENDPOINT}${decodedToken.id}`
         );
 
-        setLoggedUser(data);
+        setLoggedUser({
+          ...data,
+          avatar: data.avatar ? `${URL_BACKEND}/avatars/${data.avatar}` : null,
+        });
       } catch (error) {
         console.error(error.message);
       }

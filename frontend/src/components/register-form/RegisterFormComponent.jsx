@@ -29,7 +29,7 @@ const RegisterForm = () => {
         const { message } = await postAxios(URL_NEWUSER_ENDPOINT, body);
 
         setAlert({ type: "success", msg: message });
-        navigate("/");
+        navigate("/active-user", { state: { userData: body } });
       } catch (error) {
         console.error(error.message);
         setAlert({ type: "error", msg: error.message });
@@ -81,7 +81,9 @@ const RegisterForm = () => {
           }}
         />
 
-        <p>Estoy de acuerdo con los Teminos y Condiciones.</p>
+        <p>
+          Estoy de acuerdo con los <span>Términos y Condiciones</span>.
+        </p>
 
         <button onClick={(e) => registerUser(e)}>Registro</button>
       </form>

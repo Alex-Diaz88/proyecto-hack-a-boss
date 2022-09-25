@@ -1,0 +1,21 @@
+.active_user {
+  text-align: center;
+}
+
+.active_user p {
+  margin: 0.5rem;
+}
+
+.active_user button {
+  border: none;
+  background-color: var(--space-blue);
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.25rem;
+  font-size: medium;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.active_user button:active {
+  transform: scale(0.98);
+}

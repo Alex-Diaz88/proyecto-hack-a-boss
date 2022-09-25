@@ -1,5 +1,5 @@
-import Travel from "../Travel/TravelComponent.jsx";
 import "./styles.css";
+import Travel from "../Travel/TravelComponent.jsx";
 //import { travels } from "../../App";
 
 const TravelList = ({ travels }) => {

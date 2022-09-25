@@ -27,6 +27,11 @@
   margin-bottom: 0.5rem;
 }
 
+.register_form p span {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .register_form button {
   width: 100%;
   border: none;

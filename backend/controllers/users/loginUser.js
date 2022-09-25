@@ -16,10 +16,9 @@ const loginUser = async (req, res, next) => {
         await validate(loginUserSchema, req.body);
 
         const [user] = await connection.query(
-            `select id, email, password from user where email = ?`,
+            `select id, email, password, active from user where email = ?`,
             [email]
         );
-        console.log(user);
 
         if (user.length < 1) {
             throw generateError(
@@ -36,6 +35,10 @@ const loginUser = async (req, res, next) => {
                 401
             );
         }
+        const [[userInfo]] = await connection.query(
+            `select id, username, email, avatar, createdAt from user where id = ?`,
+            [user[0].id]
+        );
 
         const tokenInfo = {
             id: user[0].id,
@@ -47,7 +50,7 @@ const loginUser = async (req, res, next) => {
 
         res.send({
             status: 'Ok',
-            authToken: token,
+            data: { authToken: token, ...userInfo },
         });
     } catch (error) {
         next(error);

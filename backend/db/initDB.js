@@ -26,7 +26,9 @@ async function main() {
                 email varchar(100) not null,
                 password varchar(200) not null,
                 avatar varchar(255),
-                createdAt datetime default CURRENT_TIMESTAMP           
+                active boolean default false,
+                createdAt datetime default CURRENT_TIMESTAMP
+                           
             )
         `);
 
@@ -79,12 +81,12 @@ async function main() {
         console.log('¡Tablas creadas con éxito!');
 
         await connection.query(`
-            INSERT INTO user (id, username, email,  password, avatar)
-                VALUES (1, 'Rick', 'rickmail@gmail.com', '12345', 'Rick_Sanchez_Avatar.png'),
-                (2, 'Morty', 'mortymail@gmail.com', '12345', 'Morty_Avatar.jpg'),
-                (3, 'StarLord', 'starlordmail@gmail.com', '12345', 'Starlord_Avatar.jpg'),
-                (4, 'Bender', 'bendermail@gmail.com', '12345', 'Bender_Avatar.jpg'),
-                (5, 'Paco', 'pacomail@gmail.com', '12345', 'Paco_Avatar.png');
+            INSERT INTO user (id, username, email,  password, avatar, active)
+                VALUES (1, 'Rick', 'rickmail@gmail.com', '12345', 'Rick_Sanchez_Avatar.png', true),
+                (2, 'Morty', 'mortymail@gmail.com', '12345', 'Morty_Avatar.jpg', true),
+                (3, 'StarLord', 'starlordmail@gmail.com', '12345', 'Starlord_Avatar.jpg', true),
+                (4, 'Bender', 'bendermail@gmail.com', '12345', 'Bender_Avatar.jpg', true),
+                (5, 'Paco', 'pacomail@gmail.com', '12345', 'Paco_Avatar.png', true);
         `);
 
         console.log('¡Usuarios insertados con éxito!');

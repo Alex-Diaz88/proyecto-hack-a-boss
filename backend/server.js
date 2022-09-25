@@ -4,14 +4,16 @@ const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const app = express();
+const path = require('path');
 const corsOptions = {
-    origin: 'http://localhost:3000/',
+    origin: 'http://localhost:3000',
 };
 
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(fileUpload());
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, 'static/')));
 
 // ## MIDDLEWARES ##
 const isAuth = require('./middlewares/isAuth');
@@ -23,6 +25,7 @@ const canEditComment = require('./middlewares/canEditComment');
 const {
     newUser,
     loginUser,
+    activeUser,
     getUser,
     editUser,
     editUserPassword,
@@ -54,6 +57,7 @@ const {
 app.post('/register', newUser);
 app.post('/login', loginUser);
 app.get('/users/:idUser', getUser);
+app.put('/users/active', activeUser);
 app.put('/users', isAuth, editUser);
 app.put('/users/:idUser/password', isAuth, canEditUser, editUserPassword);
 app.put('/users/:idUser/avatar', isAuth, canEditUser, editUserAvatar);
