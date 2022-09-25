@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CustomTokenContextProvider } from "./contexts/TokenContext";
 import { CustomAlertContextProvider } from "./contexts/AlertContext";
-import FrontPage from "./pages/front-page/FrontPage";
+import TravelsPage from "./pages/travels-page/TravelsPage";
 import RegisterPage from "./pages/register-page/RegisterPage";
 import ActiveUser from "./components/active-user/activeUser";
 import ProfilePage from "./pages/profile-page/ProfilePage";
@@ -21,7 +21,7 @@ function App() {
             <main>
               <Alert />
               <Routes>
-                <Route path="/" element={<FrontPage />} />
+                <Route path="/" element={<TravelsPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/active-user" element={<ActiveUser />} />
                 <Route path="/profile" element={<ProfilePage />} />

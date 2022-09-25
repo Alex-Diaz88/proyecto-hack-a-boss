@@ -1,5 +1,5 @@
 import "./styles.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { postAxios } from "../../services/CommonServices";
 import { URL_LOGIN_ENDPOINT } from "../../services/constants";
@@ -15,7 +15,7 @@ const Header = () => {
   const { token, setToken } = useTokenContext();
   const { loggedUser } = useTokenContext();
 
-  const navigate = useNavigate();
+  console.log(loggedUser);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -45,15 +45,6 @@ const Header = () => {
     }
   };
 
-  const redirect = () => {
-    navigate("/profile");
-  };
-  const logOut = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-    window.location.reload(false);
-  };
-
   return (
     <header>
       <div className="banner">
@@ -75,14 +66,6 @@ const Header = () => {
           />
         )}
       </div>
-      {token && (
-        <nav>
-          <ul>
-            <li onClick={() => redirect()}>Mi cuenta</li>
-            <li onClick={() => logOut()}>Cerrar Sesión</li>
-          </ul>
-        </nav>
-      )}
     </header>
   );
 };

@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const getDB = require('./getDB');
+const bcrypt = require('bcrypt');
 
 async function main() {
     let connection;
@@ -80,14 +81,23 @@ async function main() {
 
         console.log('¡Tablas creadas con éxito!');
 
-        await connection.query(`
-            INSERT INTO user (id, username, email,  password, avatar, active)
-                VALUES (1, 'Rick', 'rickmail@gmail.com', '12345', 'Rick_Sanchez_Avatar.png', true),
-                (2, 'Morty', 'mortymail@gmail.com', '12345', 'Morty_Avatar.jpg', true),
-                (3, 'StarLord', 'starlordmail@gmail.com', '12345', 'Starlord_Avatar.jpg', true),
-                (4, 'Bender', 'bendermail@gmail.com', '12345', 'Bender_Avatar.jpg', true),
-                (5, 'Paco', 'pacomail@gmail.com', '12345', 'Paco_Avatar.png', true);
-        `);
+        const hashedPassword = await bcrypt.hash('12345', 10);
+
+        await connection.query(
+            `INSERT INTO user (id, username, email,  password, avatar, active)
+                VALUES (1, 'Rick', 'rickmail@gmail.com', ?, 'Rick_Sanchez_Avatar.png', true),
+                (2, 'Morty', 'mortymail@gmail.com', ?, 'Morty_Avatar.jpg', true),
+                (3, 'StarLord', 'starlordmail@gmail.com', ?, 'Starlord_Avatar.jpg', true),
+                (4, 'Bender', 'bendermail@gmail.com', ?, 'Bender_Avatar.jpg', true),
+                (5, 'Paco', 'pacomail@gmail.com', ?, 'Paco_Avatar.png', true)`,
+            [
+                hashedPassword,
+                hashedPassword,
+                hashedPassword,
+                hashedPassword,
+                hashedPassword,
+            ]
+        );
 
         console.log('¡Usuarios insertados con éxito!');
 

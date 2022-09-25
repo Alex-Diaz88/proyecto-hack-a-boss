@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import UserProfileAccount from "./components/UserProfileAccount/UserProfileAccount.jsx";
-
-import UserProfileTravels from "./components/UserProfileTravels/UserProfileTravels.jsx";
+import { useTokenContext } from "../../contexts/TokenContext.js";
+import UserProfileAccount from "./components/UserProfileAccount/UserProfileAccountComponent.jsx";
+import UserProfileTravels from "./components/UserProfileTravels/UserProfileTravelsComponent.jsx";
 
 const UserProfile = () => {
   const [myAccount, setMyAccount] = useState(true);
+  const { loggedUser } = useTokenContext();
+
   const handlerChangeMenuAccount = () => {
     setMyAccount(true);
   };
@@ -22,7 +24,11 @@ const UserProfile = () => {
           </ul>
         </nav>
       </section>
-      {myAccount ? <UserProfileAccount /> : <UserProfileTravels />}
+      {myAccount ? (
+        <UserProfileAccount loggedUser={loggedUser} />
+      ) : (
+        <UserProfileTravels />
+      )}
     </>
   );
 };
